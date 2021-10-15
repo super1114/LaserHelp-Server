@@ -1,7 +1,7 @@
 const User = require("../models/user.model.js");
 
 exports.signUp = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
