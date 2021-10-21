@@ -1,7 +1,7 @@
 module.exports = app => {
-  const tokensale = require("../controllers/tokensale.controller.js");
+  const laserhelp = require("../controllers/laserhelp.controller.js");
 
-  app.get("/api/socialShare", tokensale.socialShare);
-  app.post("/api/checkMetamaskAddr", tokensale.checkMetamaskAddr);
-  app.post("/api/addReferralCode", tokensale.addReferralCode);
+  app.post("/api/signup", laserhelp.signUp);
+  app.post("/api/login", laserhelp.logIn);
+  app.post("/api/submit_question", laserhelp.Request);
 };

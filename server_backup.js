@@ -1,15 +1,15 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require('cors');
+const express = require('express');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const _ = require('lodash');
-// const Question = require("./server/models/questions.model");
 
 const app = express();
 
+// enable files upload
 app.use(fileUpload({
-  createParentPath: true
+    createParentPath: true
 }));
 
 //add other middleware
@@ -18,15 +18,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
-// const formData = require('express-form-data');
-// app.use(formData.parse());
-app.post('/api/submit_question', async (req, res) => {
-  // console.log(req.files)
-  // Question.Request(req.body, req.files, function(err, result) {
-  //   if(result.length==0) return res.json({status:false});
-  //   else return res.json({status:true, result:result});
-  // });
 
+app.post('/submit_question', async (req, res) => {
+  console.log(req.files)
   try {
       if(!req.files) {
           res.send({
@@ -34,13 +28,12 @@ app.post('/api/submit_question', async (req, res) => {
               message: 'No file uploaded'
           });
       } else {
-        
           //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
           let avatar = req.files.file;
           
           //Use the mv() method to place the file in upload directory (i.e. "uploads")
           avatar.mv('./server/uploads/' + avatar.name);
-          // console.log(avatar);
+          console.log(avatar);
           //send response
           res.send({
               status: true,
@@ -50,25 +43,18 @@ app.post('/api/submit_question', async (req, res) => {
                   mimetype: avatar.mimetype,
                   size: avatar.size
               }
-          });        
+          });
       }
   } catch (err) {
       res.status(500).send(err);
-  }  
-});
-
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  }
 });
 
 
 
-require("./server/routes/customer.routes.js")(app);
+//start app 
+const port = process.env.PORT || 3030;
 
-// set port, listen for requests
-const PORT = process.env.PORT || 3030;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.listen(port, () => 
+  console.log(`App is listening on port ${port}.`)
+);
