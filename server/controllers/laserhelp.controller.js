@@ -1,7 +1,7 @@
 const User = require("../models/user.model.js");
+const Question = require("../models/questions.model.js");
 
 exports.signUp = (req, res) => {
-  // console.log(req.body);
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
@@ -22,7 +22,21 @@ exports.logIn = (req, res) => {
   }
   User.logIn(req.body, function (err, result) {
     if(result.length==0) return res.json({status:false});
-    else return res.json({status:true});
+    else return res.json({status:true, result:result});
   });
-  //return res.json({aaa:"L"});
+}
+
+exports.Request = async (req, res) => {
+  console.log("kdkdkdkdkdkd");
+    // console.log("name:",req.files.file.name);
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+  Question.Request(req.body, req.files, function(err, result) {
+    if(result.length==0) return res.json({status:false});
+    else return res.json({status:true, result:result});
+  });
 }

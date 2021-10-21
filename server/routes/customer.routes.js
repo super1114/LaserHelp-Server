@@ -3,4 +3,5 @@ module.exports = app => {
 
   app.post("/api/signup", laserhelp.signUp);
   app.post("/api/login", laserhelp.logIn);
+  app.post("/api/submit_question", laserhelp.Request);
 };
