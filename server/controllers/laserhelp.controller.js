@@ -11,7 +11,6 @@ exports.signUp = (req, res) => {
     if(result.length==0) return res.json({status:false});
     else return res.json({status:true});
   });
-  // return res.json({aaa:"S"});
 }
 
 exports.logIn = (req, res) => {
@@ -22,13 +21,11 @@ exports.logIn = (req, res) => {
   }
   User.logIn(req.body, function (err, result) {
     if(result.length==0) return res.json({status:false});
-    else return res.json({status:true, result:result});
+    else return res.json({status:true, result:result[0]});
   });
 }
 
 exports.Request = async (req, res) => {
-  console.log("kdkdkdkdkdkd");
-    // console.log("name:",req.files.file.name);
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
@@ -38,5 +35,35 @@ exports.Request = async (req, res) => {
   Question.Request(req.body, req.files, function(err, result) {
     if(result.length==0) return res.json({status:false});
     else return res.json({status:true, result:result});
+  });
+}
+
+exports.fetchResponse = async (req, res) => {
+  var results = [];
+  var data = await Question.fetchResponse();
+  console.log("__________________________");
+  //console.log(data.length);
+  for(var i=0;i<data.length;i++) {
+    let item = await Question.getReplies(data[i].id);
+    let itemObj = {
+      question:data[i],
+      replies: item
+    };
+    results.push(itemObj);
+  }
+  console.log(results);
+  res.json({status:true, result:results})
+}
+
+exports.downloadFile = async (req, res) => {
+  Question.downloadFile(req.params.id, function(err, result) {
+    res.download(`server/uploads/${result[0].attached_file}`);
+  });
+}
+
+exports.submitResponse = async (req, res) => {
+  Question.submitResponse(req.body, function(err, result) {
+    if(err) return res.json({status:false});
+    else return res.json({ status:true, result:result });
   });
 }
