@@ -36,21 +36,6 @@ module.exports.fetchResponse = async () => {
             return resolve(elements);
         });
     });
-
-
-
-    // let query = "select *, requests.id as id, requests.created_at as created_at from requests join users on users.id=requests.user_id ORDER BY requests.id desc";
-    // var newRes = [];
-    // sql.query(query, async function (err, result) {
-        
-    //     for(var i=0;i<result.length;i++) {
-    //         await getReplies(result[i].id, function(err, res){
-    //             newRes.push(res);
-    //         });
-    //     }
-    //     console.log(newRes);
-    //     //callback(err, result);
-    // });
 }
 
 module.exports.downloadFile = (id, callback) => {
