@@ -41,8 +41,6 @@ exports.Request = async (req, res) => {
 exports.fetchResponse = async (req, res) => {
   var results = [];
   var data = await Question.fetchResponse();
-  console.log("__________________________");
-  //console.log(data.length);
   for(var i=0;i<data.length;i++) {
     let item = await Question.getReplies(data[i].id);
     let itemObj = {
@@ -51,7 +49,6 @@ exports.fetchResponse = async (req, res) => {
     };
     results.push(itemObj);
   }
-  console.log(results);
   res.json({status:true, result:results})
 }
 
