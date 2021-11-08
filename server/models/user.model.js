@@ -35,5 +35,18 @@ module.exports.logIn = (info, callback) => {
     });
 }
 
+module.exports.getUser = (info, callback) => {
+    console.log(info)
+    var query = "SELECT * from users WHERE id="+info.id;
+    console.log(query);
+    sql.query(query, function (err, result) {
+        console.log(result);
+        if(result.length==0) { callback(true, []); }
+        else {
+            callback(false, result[0]);
+        }
+    });
+     
+}
 
 

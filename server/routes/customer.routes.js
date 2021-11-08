@@ -7,4 +7,5 @@ module.exports = app => {
   app.get("/api/fetch_response", laserhelp.fetchResponse);
   app.get("/api/download/:id", laserhelp.downloadFile);
   app.post("/api/submitResponse", laserhelp.submitResponse);
+  app.get("/api/user/:id", laserhelp.getUser);
 };

@@ -64,3 +64,9 @@ exports.submitResponse = async (req, res) => {
     else return res.json({ status:true, result:result });
   });
 }
+exports.getUser = async (req, res) => {
+  User.getUser(req.params, function(err, result) {
+    if(err) return res.json({status:false});
+    else return res.json({ status:true, result:result });
+  });
+}
